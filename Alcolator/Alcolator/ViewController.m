@@ -10,6 +10,7 @@
 
 @interface ViewController ()
 
+@property (nonatomic, strong) NSNumber *fred;
 
 @end
 
@@ -18,6 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    float x = 0;
+    _fred = @(x);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,6 +38,16 @@
 - (IBAction)sliderValueDidChange:(UISlider *)sender {
     NSLog(@"Slider value changed to %f", sender.value);
     [self.beerPercentTextField resignFirstResponder];
+ // Assignment work for checkpoint 21
+
+    NSString *beverageText;
+    if (_fred.floatValue <2) {
+        beverageText = [NSString stringWithFormat:@"Wine (%d glass)", _fred.intValue];
+        }
+     else {
+        beverageText = [NSString stringWithFormat:@"Wine (%d glasses)", _fred.intValue];
+      }
+    self.navigationItem.title = beverageText;
 }
 - (IBAction)buttonPressed:(id)sender {
     [self.beerPercentTextField resignFirstResponder];
@@ -50,13 +63,16 @@
     float ouncesOfAlcoholPerWineGlass = ouncesInOneWineGlass * alcoholPercentageOfWine;
     float numberOfWineGlassesForEquivalentAlcoholAmount = ouncesOfAlcoholTotal / ouncesOfAlcoholPerWineGlass;
     // decide whether to use "beer"/"beers" and "glass"/"glasses"
+  
+    _fred = @(numberOfWineGlassesForEquivalentAlcoholAmount) ;
+    
     NSString *beerText;
     if (numberOfBeers == 1) {
         beerText = NSLocalizedString(@"beer", @"singular beer");
     } else {
         beerText = NSLocalizedString(@"beers", @"plural of beer");
     }
-    NSString *wineText;
+      NSString *wineText;
     if (numberOfWineGlassesForEquivalentAlcoholAmount == 1) {
         wineText = NSLocalizedString(@"glass", @"singular glass");
     } else {

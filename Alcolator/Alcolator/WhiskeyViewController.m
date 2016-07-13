@@ -10,9 +10,31 @@
 
 @interface WhiskeyViewController ()
 
+@property (nonatomic, strong) NSNumber *fred;
+
 @end
 
 @implementation WhiskeyViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+    float x = 0;
+    _fred = @(x);
+}
+- (IBAction)sliderValueDidChange:(UISlider *)sender {
+    NSLog(@"Slider value changed to %f", sender.value);
+ // Assignment work for checkpoint 21
+    [self.beerPercentTextField resignFirstResponder];
+    NSString *beverageText;
+    if (_fred.floatValue <2) {
+        beverageText = [NSString stringWithFormat:@"Whiskey (%d shot)", _fred.intValue];
+    }
+    else {
+        beverageText = [NSString stringWithFormat:@"Whiskey (%d shots)", _fred.intValue];
+    }
+    self.navigationItem.title = beverageText;
+}
 
 - (void)buttonPressed:(UIButton *)sender;
 {
@@ -30,6 +52,8 @@
     
     float ouncesOfAlcoholPerWhiskeyGlass = ouncesInOneWhiskeyGlass * alcoholPercentageOfWhiskey;
     float numberOfWhiskeyGlassesForEquivalentAlcoholAmount = ouncesOfAlcoholTotal / ouncesOfAlcoholPerWhiskeyGlass;
+   
+    _fred = @(numberOfWhiskeyGlassesForEquivalentAlcoholAmount) ;
     
     NSString *beerText;
     
